@@ -1,14 +1,34 @@
 import { useEffect, useState } from 'react'
 import AvailabilityModal from './AvailabilityModal'
+import Reveal from './Reveal'
+import { LeafDivider, LeafSprig } from './Ornaments'
 import './App.css'
 
 const NAV_LINKS = [
+  { href: '#history', label: 'Our Story' },
   { href: '#rooms', label: 'Rooms' },
   { href: '#breakfast', label: 'Breakfast' },
   { href: '#attractions', label: 'Door County' },
   { href: '#policies', label: 'Good to Know' },
   { href: '#contact', label: 'Contact' },
 ]
+
+const HERO_SLIDES = [
+  {
+    src: '/images/main-pic7.png',
+    alt: 'A candlelit breakfast table set with coffee, juice, and a warm baked dish',
+  },
+  {
+    src: '/images/guest-policy-min.jpg',
+    alt: 'Garden flowers and a set table on the porch of The Garden Gate',
+  },
+  {
+    src: '/images/gate-house.jpg',
+    alt: 'The Garden Gate, a blue Victorian home with a white picket fence',
+  },
+]
+
+const HISTORY_TIMELINE = ['1910', 'Built by John Falk', 'Carefully preserved through the years', 'Welcoming guests today']
 
 const ROOMS = [
   {
@@ -26,11 +46,12 @@ const ROOMS = [
       'Soft sage walls, a mirrored oak armoire, and a private en-suite bath just steps from the bed.',
   },
   {
-    name: 'Lavender Room',
+    name: 'English Lavender Room',
     image: '/images/lavender-room-2.jpg',
     bed: 'Queen bed',
     blurb:
       'Named for its dusty-violet walls, this room pairs a dark wood dresser with a plush floral rug.',
+    featured: true,
   },
   {
     name: 'Vintage Rose Room',
@@ -85,11 +106,19 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [heroIndex, setHeroIndex] = useState(0)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setHeroIndex((i) => (i + 1) % HERO_SLIDES.length)
+    }, 6000)
+    return () => clearInterval(timer)
   }, [])
 
   return (
@@ -129,11 +158,18 @@ export default function App() {
 
       <main id="top">
         <section className="hero">
-          <img src="/images/gate-house.jpg" alt="The Garden Gate, a blue Victorian home with a white picket fence" />
+          {HERO_SLIDES.map((slide, i) => (
+            <img
+              key={slide.src}
+              src={slide.src}
+              alt={slide.alt}
+              className={`hero__slide ${i === heroIndex ? 'is-active' : ''}`}
+            />
+          ))}
           <div className="hero__scrim" />
           <div className="hero__content">
             <p className="eyebrow eyebrow--light">Door County, Wisconsin</p>
-            <h1>The Garden Gate</h1>
+            <h1>A Peaceful Victorian Retreat in Door County</h1>
             <p className="hero__subtitle">
               A Victorian bed &amp; breakfast where every room has a story and breakfast is
               never rushed.
@@ -147,45 +183,70 @@ export default function App() {
               </button>
             </div>
           </div>
+          <div className="hero__dots">
+            {HERO_SLIDES.map((slide, i) => (
+              <button
+                key={slide.src}
+                className={i === heroIndex ? 'is-active' : ''}
+                aria-label={`Show slide ${i + 1}`}
+                onClick={() => setHeroIndex(i)}
+              />
+            ))}
+          </div>
         </section>
 
-        <section className="welcome">
-          <div className="welcome__image">
+        <section className="more-than-stay">
+          <Reveal className="more-than-stay__image">
+            <img src="/images/main-pic4.png" alt="A fireplace glowing beside a formal dining room" />
+          </Reveal>
+          <Reveal as="div" className="more-than-stay__text">
+            <p className="eyebrow">More Than a Stay</p>
+            <h2>Relax Like You&rsquo;re Visiting Old Friends</h2>
+            <p>
+              Sink into a cozy chair beside the fireplace, enjoy a homemade dessert in the
+              evening, and wake to the smell of a freshly prepared breakfast.
+            </p>
+          </Reveal>
+        </section>
+
+        <LeafDivider />
+
+        <section id="history" className="history">
+          <Reveal as="div" className="history__text">
+            <p className="eyebrow">Our Story</p>
+            <h2>A Home With a Century Behind It</h2>
+            <ol className="timeline">
+              {HISTORY_TIMELINE.map((step) => (
+                <li key={step}>{step}</li>
+              ))}
+            </ol>
+            <p>
+              Built in 1910 by local craftsman John Falk — the same builder behind several of
+              downtown Door County&rsquo;s landmark buildings — this home has been carefully
+              preserved through generations, from its original woodwork to its wraparound porch.
+              Today it continues its purpose, welcoming travelers just as it has for over a
+              century.
+            </p>
+          </Reveal>
+          <Reveal className="history__image">
             <img src="/images/main-pic3.png" alt="The home's original oak staircase and entry hall" />
-          </div>
-          <div className="welcome__text">
-            <p className="eyebrow">Welcome</p>
-            <h2>A century-old home, kept just as warm as ever</h2>
-            <p>
-              Built in the late 1800s and lovingly restored, The Garden Gate keeps its original
-              woodwork, its wallpapered corners, and its slow front-porch pace. We&rsquo;re a
-              five-minute walk from the harbor and a short drive from the county&rsquo;s
-              lighthouses, wineries, and shoreline trails &mdash; close enough to explore, quiet
-              enough to actually rest.
-            </p>
-            <p>
-              Four guest rooms, a fireplace-lit parlor, and a breakfast table that fills most
-              mornings with the smell of something baking.
-            </p>
-            <a href="#rooms" className="text-link">
-              See the rooms &rarr;
-            </a>
-          </div>
+          </Reveal>
         </section>
 
         <section id="rooms" className="rooms">
-          <div className="section-heading">
+          <Reveal as="div" className="section-heading">
             <p className="eyebrow">Stay</p>
             <h2>Four Rooms, Each Its Own Mood</h2>
             <p className="section-heading__sub">
               Every room is individually decorated with antiques original to the house, a private
               or en-suite bath, and a bed made up with more pillows than you asked for.
             </p>
-          </div>
+          </Reveal>
           <div className="room-grid">
-            {ROOMS.map((room) => (
-              <article className="room-card" key={room.name}>
+            {ROOMS.map((room, i) => (
+              <Reveal as="article" className="room-card" key={room.name} style={{ transitionDelay: `${i * 80}ms` }}>
                 <div className="room-card__image">
+                  {room.featured && <span className="room-card__badge">Featured Room</span>}
                   <img src={room.image} alt={room.name} loading="lazy" />
                 </div>
                 <div className="room-card__body">
@@ -193,31 +254,36 @@ export default function App() {
                   <p className="room-card__bed">{room.bed}</p>
                   <p>{room.blurb}</p>
                 </div>
-              </article>
+              </Reveal>
             ))}
           </div>
 
           <div className="detail-strip">
-            {DETAIL_SHOTS.map((shot) => (
-              <figure key={shot.image}>
+            {DETAIL_SHOTS.map((shot, i) => (
+              <Reveal
+                as="figure"
+                key={shot.image}
+                style={{ transitionDelay: `${i * 80}ms` }}
+              >
                 <img src={shot.image} alt={shot.caption} loading="lazy" />
                 <figcaption>{shot.caption}</figcaption>
-              </figure>
+              </Reveal>
             ))}
           </div>
         </section>
 
         <section id="breakfast" className="breakfast">
-          <div className="breakfast__image">
+          <Reveal className="breakfast__image">
             <img src="/images/main-pic7.png" alt="A gourmet baked breakfast dish with coffee and juice" />
-          </div>
-          <div className="breakfast__text">
+          </Reveal>
+          <Reveal as="div" className="breakfast__text">
             <p className="eyebrow">Every Morning</p>
             <h2>Breakfast, Made From Scratch</h2>
             <p>
-              A full, hot breakfast is included with every stay &mdash; baked egg dishes, coffee
-              cake still warm from the oven, and fresh fruit, served in the dining room or out on
-              the porch when the weather cooperates.
+              Each morning, guests gather in the dining room for a candlelit breakfast with soft
+              music and easy conversation. Everything is prepared fresh by innkeeper Robin Vallow
+              using locally sourced ingredients &mdash; think seasonal fruit, homemade scones,
+              quiche, and more.
             </p>
             <blockquote>
               <p>
@@ -225,44 +291,70 @@ export default function App() {
                 and enough for seconds.&rdquo;
               </p>
               <footer>
-                <img src="/images/robin.png" alt="Robin, innkeeper of The Garden Gate" />
-                <span>Robin, Innkeeper</span>
+                <img src="/images/robin.png" alt="Robin Vallow, innkeeper of The Garden Gate" />
+                <span>Robin Vallow, your innkeeper</span>
               </footer>
             </blockquote>
-          </div>
+          </Reveal>
         </section>
 
         <section id="attractions" className="attractions">
-          <div className="section-heading">
+          <Reveal as="div" className="section-heading">
             <p className="eyebrow">Nearby</p>
             <h2>Door County, Right Outside</h2>
             <p className="section-heading__sub">
               Lighthouses, shoreline, and small-town charm are all within easy reach &mdash; close
               enough for an afternoon, far enough to feel like a proper trip.
             </p>
-          </div>
+          </Reveal>
           <div className="attraction-grid">
-            {ATTRACTIONS.map((item) => (
-              <article className="attraction-card" key={item.title}>
-                <img src={item.image} alt={item.title} loading="lazy" />
+            {ATTRACTIONS.map((item, i) => (
+              <Reveal
+                as="article"
+                className="attraction-card"
+                key={item.title}
+                style={{ transitionDelay: `${i * 70}ms` }}
+              >
+                <div className="attraction-card__image">
+                  <img src={item.image} alt={item.title} loading="lazy" />
+                </div>
                 <div className="attraction-card__body">
                   <h3>{item.title}</h3>
                   <p>{item.text}</p>
                 </div>
-              </article>
+              </Reveal>
             ))}
           </div>
         </section>
 
+        <LeafDivider />
+
+        <section id="faith" className="faith">
+          <Reveal className="faith__inner">
+            <LeafSprig className="faith__icon" />
+            <p className="eyebrow">Our Values</p>
+            <h2>Rooted in Faith. Guided by Hospitality.</h2>
+            <p>
+              Hospitality, to us, is more than a business &mdash; it&rsquo;s a way of caring for
+              people. We try to welcome every guest the way we&rsquo;d want to be welcomed
+              ourselves: unhurried, genuinely looked after, and always with a warm place to land.
+            </p>
+            <blockquote className="faith__verse">
+              <p>&ldquo;Build houses and settle down; plant gardens and eat what they produce.&rdquo;</p>
+              <cite>Jeremiah 29:5</cite>
+            </blockquote>
+          </Reveal>
+        </section>
+
         <section id="policies" className="policies">
-          <div className="policies__banner">
+          <Reveal className="policies__banner">
             <img src="/images/guest-policy-min.jpg" alt="Garden flowers, the house exterior, and a set breakfast table" />
-          </div>
+          </Reveal>
           <div className="policies__content">
-            <div className="section-heading section-heading--left">
+            <Reveal as="div" className="section-heading section-heading--left">
               <p className="eyebrow">Good to Know</p>
               <h2>Before You Book</h2>
-            </div>
+            </Reveal>
             <div className="policies__grid">
               <div>
                 <h3>Check-in &amp; Check-out</h3>
@@ -283,6 +375,8 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <LeafDivider />
 
         <section id="contact" className="contact">
           <div className="contact__inner">
@@ -314,6 +408,7 @@ export default function App() {
 
       <footer className="site-footer">
         <p>The Garden Gate Bed &amp; Breakfast &middot; Door County, Wisconsin</p>
+        <p className="site-footer__press">As seen in Fun in Wisconsin magazine</p>
         <p>&copy; {new Date().getFullYear()} The Garden Gate. All rights reserved.</p>
       </footer>
 

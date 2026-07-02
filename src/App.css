@@ -46,11 +46,13 @@
   letter-spacing: 0.03em;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .btn:hover {
   transform: translateY(-1px);
+  box-shadow: 0 10px 20px -10px rgba(44, 58, 71, 0.35);
 }
 
 .btn--primary {
@@ -90,7 +92,59 @@
 }
 
 section {
-  padding: 5.5rem 1.5rem;
+  padding: 7rem 1.5rem;
+}
+
+/* ---------- scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal:focus-within {
+  opacity: 1;
+  transform: none;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- leaf divider ---------- */
+
+.leaf-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  max-width: 320px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  color: var(--gold);
+}
+
+.leaf-divider__line {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.leaf-divider__icon {
+  width: 26px;
+  height: 26px;
+  flex-shrink: 0;
+  opacity: 0.75;
 }
 
 /* ---------- header ---------- */
@@ -191,12 +245,19 @@ section {
   overflow: hidden;
 }
 
-.hero img {
+.hero__slide {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+
+.hero__slide.is-active {
+  opacity: 1;
+  z-index: 1;
 }
 
 .hero__scrim {
@@ -241,30 +302,118 @@ section {
   flex-wrap: wrap;
 }
 
-/* ---------- welcome ---------- */
+.hero__dots {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  padding-bottom: 1.8rem;
+  width: 100%;
+}
 
-.welcome {
-  max-width: 1180px;
+.hero__dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero__dots button.is-active {
+  background: var(--white);
+  transform: scale(1.15);
+}
+
+/* ---------- more than a stay / history (split sections) ---------- */
+
+.more-than-stay,
+.history {
+  max-width: 1200px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  gap: 4.5rem;
   align-items: center;
 }
 
-.welcome__image img {
-  border-radius: 4px;
-  box-shadow: 0 24px 48px -20px rgba(44, 58, 71, 0.35);
+.more-than-stay {
+  padding-bottom: 4rem;
 }
 
-.welcome__text h2 {
+.more-than-stay__image img,
+.history__image img {
+  border-radius: 4px;
+  box-shadow: 0 26px 52px -22px rgba(44, 58, 71, 0.35);
+  transition: transform 0.5s ease;
+}
+
+.more-than-stay__image:hover img,
+.history__image:hover img {
+  transform: scale(1.015);
+}
+
+.more-than-stay__text h2,
+.history__text h2 {
   font-size: clamp(1.75rem, 3vw, 2.3rem);
   margin-bottom: 1.2rem;
 }
 
-.welcome__text p {
+.more-than-stay__text p,
+.history__text > p {
   color: var(--ink-soft);
   margin-bottom: 1rem;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0 0 1.8rem;
+  padding: 0;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--border);
+}
+
+.timeline li {
+  position: relative;
+  padding-left: 2.3rem;
+  margin-bottom: 1rem;
+  font-size: 0.98rem;
+  color: var(--ink-soft);
+}
+
+.timeline li:first-child {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 1.1rem;
+}
+
+.timeline li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--cream);
+  border: 2px solid var(--rose);
+}
+
+.timeline li:last-child {
+  margin-bottom: 0;
 }
 
 /* ---------- rooms ---------- */
@@ -278,18 +427,25 @@ section {
   margin: 0 auto;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .room-card {
   background: var(--white);
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 18px 40px -24px rgba(44, 58, 71, 0.4);
+  box-shadow: 0 14px 34px -22px rgba(44, 58, 71, 0.28);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.room-card:hover {
+  box-shadow: 0 22px 44px -20px rgba(44, 58, 71, 0.32);
+  transform: translateY(-2px);
 }
 
 .room-card__image {
-  aspect-ratio: 4 / 3;
+  position: relative;
+  aspect-ratio: 5 / 4;
   overflow: hidden;
 }
 
@@ -297,11 +453,27 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .room-card:hover .room-card__image img {
-  transform: scale(1.04);
+  transform: scale(1.05);
+}
+
+.room-card__badge {
+  position: absolute;
+  top: 0.9rem;
+  left: 0.9rem;
+  z-index: 2;
+  background: var(--gold);
+  color: var(--navy-deep);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.35rem 0.7rem;
+  border-radius: 3px;
+  box-shadow: 0 6px 14px -4px rgba(44, 58, 71, 0.4);
 }
 
 .room-card__body {
@@ -328,7 +500,7 @@ section {
 
 .detail-strip {
   max-width: 1180px;
-  margin: 3.5rem auto 0;
+  margin: 5rem auto 0;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1.25rem;
@@ -346,6 +518,11 @@ section {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.detail-strip figure:hover img {
+  transform: scale(1.06);
 }
 
 .detail-strip figcaption {
@@ -431,13 +608,28 @@ section {
   background: var(--white);
   border-radius: 6px;
   overflow: hidden;
-  box-shadow: 0 18px 40px -26px rgba(44, 58, 71, 0.4);
+  box-shadow: 0 14px 34px -24px rgba(44, 58, 71, 0.3);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
-.attraction-card img {
+.attraction-card:hover {
+  box-shadow: 0 20px 42px -20px rgba(44, 58, 71, 0.34);
+  transform: translateY(-2px);
+}
+
+.attraction-card__image {
+  overflow: hidden;
+}
+
+.attraction-card__image img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 11;
   object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.attraction-card:hover .attraction-card__image img {
+  transform: scale(1.05);
 }
 
 .attraction-card__body {
@@ -454,16 +646,69 @@ section {
   font-size: 0.95rem;
 }
 
+/* ---------- faith & hospitality ---------- */
+
+.faith {
+  background: var(--cream);
+  text-align: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.faith__inner {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+.faith__icon {
+  width: 34px;
+  height: 34px;
+  color: var(--gold);
+  margin: 0 auto 1.3rem;
+}
+
+.faith h2 {
+  font-size: clamp(1.6rem, 2.6vw, 2.1rem);
+  margin-bottom: 1.1rem;
+}
+
+.faith__inner > p {
+  color: var(--ink-soft);
+}
+
+.faith__verse {
+  margin: 2.2rem 0 0;
+  padding: 0;
+}
+
+.faith__verse p {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.faith__verse cite {
+  display: block;
+  margin-top: 0.6rem;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
 /* ---------- policies ---------- */
 
 .policies {
   max-width: 1180px;
   margin: 0 auto;
-  padding-top: 0;
+  padding-top: 4rem;
 }
 
 .policies__banner {
-  margin: 0 0 3.5rem;
+  margin: 0 0 4.5rem;
   border-radius: 6px;
   overflow: hidden;
   box-shadow: 0 18px 40px -26px rgba(44, 58, 71, 0.4);
@@ -544,6 +789,12 @@ section {
 
 .site-footer p {
   margin: 0.2rem 0;
+}
+
+.site-footer__press {
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
 }
 
 /* ---------- availability modal ---------- */
@@ -686,7 +937,8 @@ section {
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  .welcome,
+  .more-than-stay,
+  .history,
   .breakfast {
     grid-template-columns: 1fr;
     gap: 2.5rem;
@@ -715,7 +967,19 @@ section {
 
 @media (max-width: 760px) {
   section {
-    padding: 4rem 1.25rem;
+    padding: 4.5rem 1.25rem;
+  }
+
+  .more-than-stay {
+    padding-bottom: 1rem;
+  }
+
+  .policies {
+    padding-top: 2rem;
+  }
+
+  .leaf-divider {
+    padding: 2rem 1.5rem;
   }
 
   .menu-toggle {
