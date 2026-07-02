@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#2C3E52"/>
+  <!-- house -->
+  <path d="M32 12 12 28h6v20h28V28h6z" fill="#F5EFE0"/>
+  <!-- gate -->
+  <g fill="#B08D4F">
+    <rect x="22" y="40" width="5" height="12"/>
+    <rect x="37" y="40" width="5" height="12"/>
+    <rect x="22" y="40" width="20" height="4"/>
+  </g>
+</svg>
