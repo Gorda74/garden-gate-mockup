@@ -188,12 +188,12 @@ export default function App() {
               never rushed.
             </p>
             <div className="hero__actions">
-              <a href="#rooms" className="btn btn--primary">
-                View Rooms
-              </a>
-              <button type="button" className="btn btn--ghost" onClick={() => setModalOpen(true)}>
+              <button type="button" className="btn btn--primary" onClick={() => setModalOpen(true)}>
                 Check Availability
               </button>
+              <a href="#rooms" className="btn btn--ghost">
+                View Rooms
+              </a>
             </div>
           </div>
         </section>
