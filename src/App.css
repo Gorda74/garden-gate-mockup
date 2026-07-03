@@ -75,8 +75,8 @@
 }
 
 .btn--small {
-  padding: 0.55rem 1.3rem;
-  font-size: 0.85rem;
+  padding: 0.7rem 1.6rem;
+  font-size: 0.92rem;
 }
 
 .text-link {
@@ -159,18 +159,18 @@ section {
   position: fixed;
   inset: 0 0 auto 0;
   z-index: 100;
-  transition: background-color 0.35s var(--ease), box-shadow 0.35s var(--ease),
-    padding 0.35s var(--ease), backdrop-filter 0.35s var(--ease);
-  padding: 1.1rem 0;
+  transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease),
+    padding 0.4s var(--ease), backdrop-filter 0.4s var(--ease);
+  padding: 1.4rem 0;
   background: linear-gradient(to bottom, rgba(20, 20, 18, 0.38), rgba(20, 20, 18, 0));
 }
 
 .site-header.is-scrolled {
-  background: rgba(250, 246, 238, 0.86);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 2px 24px rgba(44, 58, 71, 0.1);
-  padding: 0.7rem 0;
+  background: rgba(248, 244, 236, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 30px rgba(44, 58, 71, 0.09);
+  padding: 0.95rem 0;
 }
 
 .site-header__inner {
@@ -187,8 +187,10 @@ section {
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 600;
-  font-size: 1.65rem;
+  font-size: 1.8rem;
   color: var(--white);
+  line-height: 1;
+  white-space: nowrap;
   transition: color 0.3s ease;
 }
 
@@ -198,16 +200,21 @@ section {
 
 .main-nav {
   display: flex;
-  gap: 2.4rem;
+  align-items: center;
+  gap: 2.75rem;
 }
 
 .main-nav a {
   position: relative;
-  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  font-size: 1.0625rem;
   font-weight: 700;
   letter-spacing: 0.02em;
+  line-height: 1;
   color: var(--white);
-  padding-bottom: 3px;
+  padding-bottom: 4px;
   transition: color 0.3s ease;
 }
 
@@ -1153,15 +1160,15 @@ section {
   }
 
   .brand {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
   }
 
   .site-header {
-    padding: 0.9rem 0;
+    padding: 1.05rem 0;
   }
 
   .site-header.is-scrolled {
-    padding: 0.6rem 0;
+    padding: 0.75rem 0;
   }
 
   .more-than-stay {
