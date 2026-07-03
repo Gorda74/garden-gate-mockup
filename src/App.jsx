@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Ban, Calendar, Clock, PawPrint } from 'lucide-react'
 import AvailabilityModal from './AvailabilityModal'
 import Reveal from './Reveal'
 import { LeafDivider, LeafSprig } from './Ornaments'
@@ -13,19 +14,9 @@ const NAV_LINKS = [
   { href: '#contact', label: 'Contact' },
 ]
 
-const HERO_SLIDES = [
-  {
-    src: '/images/main-pic7.png',
-    alt: 'A candlelit breakfast table set with coffee, juice, and a warm baked dish',
-  },
-  {
-    src: '/images/guest-policy-min.jpg',
-    alt: 'Garden flowers and a set table on the porch of The Garden Gate',
-  },
-  {
-    src: '/images/gate-house.jpg',
-    alt: 'The Garden Gate, a blue Victorian home with a white picket fence',
-  },
+const HERO_COLLAGE = [
+  { src: '/images/porch-img.jpg', alt: 'The garden-side porch, set with tea for two' },
+  { src: '/images/main-pic7.png', alt: 'A candlelit breakfast spread with coffee and fresh fruit' },
 ]
 
 const HISTORY_TIMELINE = ['1910', 'Built by John Falk', 'Carefully preserved through the years', 'Welcoming guests today']
@@ -63,10 +54,10 @@ const ROOMS = [
 ]
 
 const DETAIL_SHOTS = [
-  { image: '/images/Cottage-Rose-room-2.jpg', caption: 'Ensuite baths, freshened daily' },
-  { image: '/images/nivo2.jpg', caption: 'A rose-side soak for two' },
-  { image: '/images/Garden-Suite-2.jpg', caption: 'Breakfast tray, delivered warm' },
-  { image: '/images/main-pic4.png', caption: 'The parlor fire, lit each evening' },
+  { image: '/images/Cottage-Rose-room-2.jpg', caption: 'Classic vanity details' },
+  { image: '/images/nivo2.jpg', caption: 'Private whirlpool bath' },
+  { image: '/images/main-pic4.png', caption: 'Firelit evenings in the parlor', position: '30% center' },
+  { image: '/images/big-rooms-vs2.png', caption: 'Original woodwork throughout', position: '85% center' },
 ]
 
 const ATTRACTIONS = [
@@ -99,6 +90,30 @@ const ATTRACTIONS = [
     image: '/images/lighthouse.png',
     title: 'Theatre in the Pines',
     text: 'Open-air performances under the trees at the county’s beloved outdoor theatre.',
+    position: 'center 65%',
+  },
+]
+
+const POLICIES = [
+  {
+    icon: Clock,
+    title: 'Check-in & Check-out',
+    text: 'Check-in from 3:00 PM, check-out by 11:00 AM. Early arrivals are welcome to relax on the porch until your room is ready.',
+  },
+  {
+    icon: Calendar,
+    title: 'Cancellations',
+    text: 'Full refund up to 7 days before arrival. We understand plans change — just give us a call.',
+  },
+  {
+    icon: Ban,
+    title: 'A Quiet, Grown-up Stay',
+    text: 'The house is best suited to guests 12 and older, and kept smoke-free throughout, gardens included.',
+  },
+  {
+    icon: PawPrint,
+    title: 'Bringing a Pet?',
+    text: 'Well-behaved pets are welcome in select rooms by advance arrangement — just ask when you book.',
   },
 ]
 
@@ -106,19 +121,11 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const [heroIndex, setHeroIndex] = useState(0)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroIndex((i) => (i + 1) % HERO_SLIDES.length)
-    }, 6000)
-    return () => clearInterval(timer)
   }, [])
 
   return (
@@ -158,18 +165,24 @@ export default function App() {
 
       <main id="top">
         <section className="hero">
-          {HERO_SLIDES.map((slide, i) => (
+          <div className="hero__media">
             <img
-              key={slide.src}
-              src={slide.src}
-              alt={slide.alt}
-              className={`hero__slide ${i === heroIndex ? 'is-active' : ''}`}
+              className="hero__main-image"
+              src="/images/gate-house.jpg"
+              alt="The Garden Gate, a blue Victorian home with a white picket fence and garden"
             />
-          ))}
-          <div className="hero__scrim" />
+            <div className="hero__scrim" />
+          </div>
+          <div className="hero__collage">
+            {HERO_COLLAGE.map((item) => (
+              <div className="hero__collage-item" key={item.src}>
+                <img src={item.src} alt={item.alt} />
+              </div>
+            ))}
+          </div>
           <div className="hero__content">
             <p className="eyebrow eyebrow--light">Door County, Wisconsin</p>
-            <h1>A Peaceful Victorian Retreat in Door County</h1>
+            <h1>Historic Charm. Warm Hospitality.</h1>
             <p className="hero__subtitle">
               A Victorian bed &amp; breakfast where every room has a story and breakfast is
               never rushed.
@@ -182,16 +195,6 @@ export default function App() {
                 Check Availability
               </button>
             </div>
-          </div>
-          <div className="hero__dots">
-            {HERO_SLIDES.map((slide, i) => (
-              <button
-                key={slide.src}
-                className={i === heroIndex ? 'is-active' : ''}
-                aria-label={`Show slide ${i + 1}`}
-                onClick={() => setHeroIndex(i)}
-              />
-            ))}
           </div>
         </section>
 
@@ -214,7 +217,7 @@ export default function App() {
         <section id="history" className="history">
           <Reveal as="div" className="history__text">
             <p className="eyebrow">Our Story</p>
-            <h2>A Home With a Century Behind It</h2>
+            <h2>A Storied Home Since 1910</h2>
             <ol className="timeline">
               {HISTORY_TIMELINE.map((step) => (
                 <li key={step}>{step}</li>
@@ -229,7 +232,11 @@ export default function App() {
             </p>
           </Reveal>
           <Reveal className="history__image">
-            <img src="/images/main-pic3.png" alt="The home's original oak staircase and entry hall" />
+            <img
+              src="/images/main-pic3.png"
+              alt="The home's original oak staircase and entry hall"
+              style={{ objectPosition: '25% center' }}
+            />
           </Reveal>
         </section>
 
@@ -253,6 +260,13 @@ export default function App() {
                   <h3>{room.name}</h3>
                   <p className="room-card__bed">{room.bed}</p>
                   <p>{room.blurb}</p>
+                  <button
+                    type="button"
+                    className="text-link room-card__cta"
+                    onClick={() => setModalOpen(true)}
+                  >
+                    View Room &rarr;
+                  </button>
                 </div>
               </Reveal>
             ))}
@@ -265,7 +279,12 @@ export default function App() {
                 key={shot.image}
                 style={{ transitionDelay: `${i * 80}ms` }}
               >
-                <img src={shot.image} alt={shot.caption} loading="lazy" />
+                <img
+                  src={shot.image}
+                  alt={shot.caption}
+                  loading="lazy"
+                  style={{ objectPosition: shot.position || 'center' }}
+                />
                 <figcaption>{shot.caption}</figcaption>
               </Reveal>
             ))}
@@ -316,7 +335,12 @@ export default function App() {
                 style={{ transitionDelay: `${i * 70}ms` }}
               >
                 <div className="attraction-card__image">
-                  <img src={item.image} alt={item.title} loading="lazy" />
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    loading="lazy"
+                    style={{ objectPosition: item.position || 'center' }}
+                  />
                 </div>
                 <div className="attraction-card__body">
                   <h3>{item.title}</h3>
@@ -356,22 +380,15 @@ export default function App() {
               <h2>Before You Book</h2>
             </Reveal>
             <div className="policies__grid">
-              <div>
-                <h3>Check-in &amp; Check-out</h3>
-                <p>Check-in from 3:00 PM, check-out by 11:00 AM. Early arrivals are welcome to relax on the porch until your room is ready.</p>
-              </div>
-              <div>
-                <h3>Cancellations</h3>
-                <p>Full refund up to 7 days before arrival. We understand plans change &mdash; just give us a call.</p>
-              </div>
-              <div>
-                <h3>A Quiet, Grown-up Stay</h3>
-                <p>The house is best suited to guests 12 and older, and kept smoke-free throughout, gardens included.</p>
-              </div>
-              <div>
-                <h3>Bringing a Pet?</h3>
-                <p>Well-behaved pets are welcome in select rooms by advance arrangement &mdash; just ask when you book.</p>
-              </div>
+              {POLICIES.map((item) => (
+                <div className="policy-item" key={item.title}>
+                  <item.icon className="policy-item__icon" strokeWidth={1.5} aria-hidden="true" />
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.text}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -407,9 +424,15 @@ export default function App() {
       </main>
 
       <footer className="site-footer">
-        <p>The Garden Gate Bed &amp; Breakfast &middot; Door County, Wisconsin</p>
-        <p className="site-footer__press">As seen in Fun in Wisconsin magazine</p>
-        <p>&copy; {new Date().getFullYear()} The Garden Gate. All rights reserved.</p>
+        <div className="site-footer__inner">
+          <p className="site-footer__brand">The Garden Gate</p>
+          <p>Bed &amp; Breakfast &middot; Door County, Wisconsin</p>
+          <p className="site-footer__press">As seen in Fun in Wisconsin magazine</p>
+          <div className="site-footer__divider" />
+          <p className="site-footer__copyright">
+            &copy; {new Date().getFullYear()} The Garden Gate. All rights reserved.
+          </p>
+        </div>
       </footer>
 
       <AvailabilityModal open={modalOpen} onClose={() => setModalOpen(false)} />
