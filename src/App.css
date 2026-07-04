@@ -448,7 +448,7 @@ section {
 /* ---------- more than a stay (editorial stack) / history (split) ---------- */
 
 .more-than-stay {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   text-align: center;
 }
@@ -470,11 +470,19 @@ section {
   color: var(--ink-soft);
   margin: 0;
 }
+.more-than-stay__quote-note {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  opacity: 0.6;
+  margin: 0.6rem 0 0;
+}
 
 .more-than-stay__image {
   display: block;
-  width: 78%;
-  margin: 4rem auto;
+  width: 85%;
+  margin: 2.2rem auto 3.5rem; 
   overflow: hidden;
   border-radius: 4px;
   aspect-ratio: 4 / 3;

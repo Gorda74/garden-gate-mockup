@@ -203,9 +203,10 @@ export default function App() {
             <p className="eyebrow">More Than a Stay</p>
             <h2>Relax Like You&rsquo;re Visiting Old Friends</h2>
             <p className="more-than-stay__quote">
-              May all who enter as guests, leave as friends.
-            </p>
-          </Reveal>
+  May all who enter as guests, leave as friends.
+</p>
+<p className="more-than-stay__quote-note">Greeting guests for generations</p>
+</Reveal>
           <Reveal className="more-than-stay__image">
             <img src="/images/main-pic4.png" alt="A fireplace glowing beside a formal dining room" />
           </Reveal>
