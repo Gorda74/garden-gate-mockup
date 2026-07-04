@@ -1338,3 +1338,9 @@ section {
     grid-template-columns: 1fr;
   }
 }
+#history {
+  padding-top: 3rem;
+}
+.more-than-stay {
+  padding-bottom: 3rem;
+}

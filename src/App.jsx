@@ -23,12 +23,12 @@ const HISTORY_TIMELINE = ['1910', 'Built by John Falk', 'Carefully preserved thr
 
 const ROOMS = [
   {
-    name: 'Cottage Rose Room',
-    image: '/images/Cottage-Rose-room-1.jpg',
-    bed: 'Queen bed',
-    blurb:
-      'A warm, wood-paneled retreat with a hand-carved antique headboard and its own fireplace glow.',
-  },
+  name: 'Vintage Rose Room',
+  image: '/images/Cottage-Rose-room-1.jpg',
+  bed: 'Queen bed',
+  blurb:
+    'A Victorian walnut bed and rich brown tones set a warm, cozy mood, with a private bath finished in brown and tan.'
+},
   {
     name: 'Garden Suite',
     image: '/images/Garden-Suite-1.jpg',
@@ -45,12 +45,12 @@ const ROOMS = [
     featured: true,
   },
   {
-    name: 'Vintage Rose Room',
-    image: '/images/vintage-rose-room.jpg',
-    bed: 'King bed · Sitting area',
-    blurb:
-      'Our largest room — a king bed, a window seat for reading, and a private bath with a soaking tub.',
-  },
+  name: 'Cottage Rose Room',
+  image: '/images/vintage-rose-room.jpg',
+  bed: 'Queen bed',
+  blurb:
+    'Anchored by a 1923 burled walnut bed and an oriental rug, with a window seat overlooking the garden and pines.'
+},
 ]
 
 const DETAIL_SHOTS = [
@@ -269,7 +269,7 @@ export default function App() {
                     className="text-link room-card__cta"
                     onClick={() => setModalOpen(true)}
                   >
-                    View Room &rarr;
+                    Check Availability &rarr;
                   </button>
                 </div>
               </Reveal>
