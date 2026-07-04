@@ -355,7 +355,7 @@ export default function App() {
           </div>
         </section>
 
-        <LeafDivider />
+      
 
         <section id="faith" className="faith">
           <Reveal className="faith__inner">
