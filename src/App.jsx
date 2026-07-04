@@ -199,16 +199,19 @@ export default function App() {
         </section>
 
         <section className="more-than-stay">
+          <Reveal as="div" className="more-than-stay__intro">
+            <p className="eyebrow">More Than a Stay</p>
+            <h2>Relax Like You&rsquo;re Visiting Old Friends</h2>
+            <p className="more-than-stay__quote">
+              May all who enter as guests, leave as friends.
+            </p>
+          </Reveal>
           <Reveal className="more-than-stay__image">
             <img src="/images/main-pic4.png" alt="A fireplace glowing beside a formal dining room" />
           </Reveal>
-          <Reveal as="div" className="more-than-stay__text">
-            <p className="eyebrow">More Than a Stay</p>
-            <h2>Relax Like You&rsquo;re Visiting Old Friends</h2>
-            <p>
-              Sink into a cozy chair beside the fireplace, enjoy a homemade dessert in the
-              evening, and wake to the smell of a freshly prepared breakfast.
-            </p>
+          <Reveal as="p" className="more-than-stay__caption">
+            A cozy fire in the parlor <span aria-hidden="true">&middot;</span> Homemade dessert
+            each night <span aria-hidden="true">&middot;</span> Fresh coffee at dawn
           </Reveal>
         </section>
 
